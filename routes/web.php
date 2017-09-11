@@ -11,9 +11,15 @@
 |
 */
 
-Route::get('/',     'Controller@index');
-Route::get('/home', 'HomeController@index');
+Route::get('/',         'Controller@index')->name('welcome');
+Route::get('home',      'HomeController@index')->name('home');
 
 Auth::routes();
 
-
+Route::group([
+    'prefix'    => 'socialite',
+    'namespace' => 'Socialite',
+], function () {
+    Route::get('github',           'GithubController@index')->name('socialite.github');
+    Route::get('github/callback',  'GithubController@callback')->name('socialite.github.callback');
+});
